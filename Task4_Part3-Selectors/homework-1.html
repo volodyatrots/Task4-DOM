@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+      .red {
+        color: red;
+      }
+      .device {
+        background: green;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Welcome to <span>iPhone</span> Store</h1>
+    <h2>Say hello to the future!</h2>
+    <ul class="device">
+      <li>
+        <h4>iPhone X</h4>
+        <ul>
+          <li>The future of smartphones</li>
+          <li>Price: <span>1299$</span></li>
+        </ul>
+      </li>
+    </ul>
+    <ul class="device">
+      <li>
+        <h4>iPhone 8</h4>
+        <ul>
+          <li>the new generation of iPhone</li>
+          <li>Price: <span>700$</span></li>
+        </ul>
+      </li>
+    </ul>
+    <ul class="device">
+      <li>
+        <h4>iPhone 7</h4>
+        <ul>
+          <li>the new generation of iPhone</li>
+          <li>Price: <span>600$</span></li>
+        </ul>
+      </li>
+    </ul>
+    <ul>
+      <li>
+        <h4>iPhone SE</h4>
+        <ul>
+          <li>small and smart one</li>
+          <li>Price: <span>500$</span></li>
+        </ul>
+      </li>
+    </ul>
+    <script>
+      // !Увага! Все зробити джаваскріптом без використання метода querySelector
+      //1. Знайти елементи з описом продукта та виправити, щоб текст починався з великої букви.
+      // <li>the new generation of iPhone</li> ===> <li>The new generation of iPhone</li>	  
+var textInfo=$("ul ul li:nth-child(1)");
+for(var i=0;i<textInfo.length;i++){
+  textInfo[i].innerHTML=uppFirstLetter(textInfo[i].innerHTML);
+}
+function uppFirstLetter(str) {
+        return str.charAt(0).toUpperCase() + str.slice(1);
+      }
+	  
+      //2. Виділити ціну червоним кольором (додати класс red до елемента)
+	  $("li span").addClass("red")
+	  
+      //3. Додати новий блок з елементами про iPhone 5
+      // назва - iPhone 5
+      // опис - Our Hero
+      // ціна - 300$
+	  $("h2").after("<ul><li><h4>iPhone 5</h4><ul><li>Our Hero</li><li>Price: <span>300$</span></li></ul></li></ul>")
+     
+	 //4. Перевірити чи всі блоки мають клас device, якщо немає то додати його.	  
+var ulDevice=$("body>ul")
+for(var i=0;i<ulDevice.length;i++){
+ if(ulDevice.eq(i).attr("class")===undefined){
+   ulDevice.eq(i).addClass("device")
+ }                       
+}
+
+     
+	 //5. Замінити всі слова iPhone на Android
+	  document.body.innerHTML = document.body.innerHTML.replace(/iPhone/g, 'Android');
+     
+	 //6. Написати модуль в окремому файлі currency, який буде переводити ціну в доларах в гривні
+      // і застосувати його до кожної ціни
+      // використовувати буде так
+      // currency.set(data) - задає валюту 
+      // data = {
+      //   name: "ua hryvnya",
+      //   rank: 25,
+      //   symbol: "uha"
+      // }
+      // так ми задаємо курс, і сивол для формування ціни
+      // currency.convert(price) - переводить ціну в гривні
+      // приклад ковертації
+      // 100$ => 2500uah
+	  var UA={name:"ua hryvnya",rank: 25, symbol: "uha" };
+var EUR={name:"eur euro",rank: 50, symbol: "ero" };
+	  
+var currency={
+        set : function(data){
+          this.name=data.name;
+          this.rank=data.rank;
+          this.symbol=data.symbol;
+        },
+        convert : function (price){
+          return this.rank*parseInt(price)+this.symbol;
+        }
+      }
+
+      currency.set(UA);
+
+     var span=$("li span");
+     for(var i=0;i<span.length;i++){
+       span[i].innerHTML=currency.convert(span[i].innerHTML)
+     }
+	  
+    </script>
+  </body>
+</html>

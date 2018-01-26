@@ -1,0 +1,32 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>JS Homework 2: querySelector, date, timeout</title>
+</head>
+<body>
+<!-- Task 2  -->
+  <h1>World time</h1>
+  <ul>
+    <li data-location="london" offset=0>London - <span class="time">null</span></li>
+    <li data-location="kiev" offset=2>Kiev - <span class="time">null</span></li>
+    <li data-location="warshawa" offset=1>Warshawa - <span class="time">null</span></li>
+    <li data-location="los angeles" offset=-8>Los Angeles - <span class="time">null</span></li>
+    <li data-location="new york" offset=-5>New York - <span class="time">null</span></li>
+  </ul>
+
+<script>
+  // вивести для кожного міста час і дату
+  function calcTime(offset) {
+    date = new Date();
+    utc = date.getTime() + (date.getTimezoneOffset() * 60000);
+    dateCity = new Date(utc + (3600000*offset));
+    return dateCity.toLocaleString();
+}
+  var list=document.getElementsByTagName("li");
+  var span=document.getElementsByClassName("time");
+  for(var i=0;i<list.length;i++){
+    span[i].innerHTML=calcTime(list[i].getAttribute("offset")); 
+  }
+</script>
+</body>
+</html>
